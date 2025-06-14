@@ -6,17 +6,19 @@
   <title>Unlock Content</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="bg-white p-6 rounded-2xl shadow-xl w-full max-w-md text-center">
-    <h1 class="text-2xl font-bold mb-4 text-gray-800">🎁 Unlock Your Download</h1>
-    <p class="mb-6 text-gray-600">Subscribe to our YouTube channel to unlock the hidden content.</p>
+<body class="bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md text-center">
+    <h1 class="text-3xl font-bold mb-4 text-gray-800">🔓 Unlock Your Gift</h1>
+    <p class="mb-6 text-gray-600">Subscribe to our YouTube channel to get access.</p>
 
-    <button id="subscribeBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+    <button id="subscribeBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full transition duration-300">
       🔔 Subscribe Now
     </button>
 
+    <p id="message" class="text-yellow-600 mt-4 font-medium hidden">⚠️ Please confirm your subscription and click again.</p>
+
     <div id="unlocked" class="mt-6 hidden">
-      <p class="text-green-600 font-semibold">✅ Thanks for subscribing!</p>
+      <p class="text-green-600 font-semibold">✅ Subscription confirmed!</p>
       <a href="https://example.com/your-download-link" target="_blank"
          class="mt-3 inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition">
         👉 Click here to Download
@@ -25,14 +27,25 @@
   </div>
 
   <script>
+    let clickCount = 0;
     const btn = document.getElementById('subscribeBtn');
+    const message = document.getElementById('message');
     const unlocked = document.getElementById('unlocked');
 
     btn.addEventListener('click', () => {
-      // Simulate subscription (you can add API later)
-      btn.disabled = true;
-      btn.innerText = "Subscribed ✅";
-      unlocked.classList.remove('hidden');
+      clickCount++;
+
+      if (clickCount === 1) {
+        message.classList.remove('hidden');
+        btn.classList.add('animate-bounce');
+        btn.innerText = "🔄 Click again to confirm";
+      } else if (clickCount === 2) {
+        message.classList.add('hidden');
+        btn.disabled = true;
+        btn.innerText = "✅ Subscribed";
+        unlocked.classList.remove('hidden');
+        btn.classList.remove('animate-bounce');
+      }
     });
   </script>
 </body>
