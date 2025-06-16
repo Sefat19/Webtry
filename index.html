@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Unlock Your Link</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -101,7 +105,7 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container animate__animated animate__fadeInDown">
     <h2>Unlock Your Link</h2>
     <p>Complete the actions and unlock the link</p>
 
@@ -133,14 +137,16 @@
 
     function completeAction(el) {
       if (el.classList.contains('done')) return;
-      el.classList.add('done');
+
+      el.classList.add('done', 'animate__animated', 'animate__tada');
+
       completed++;
       document.getElementById("count").innerText = completed;
       document.getElementById("barFill").style.width = (completed * 25) + "%";
 
       if (completed === 4) {
         const unlockBtn = document.getElementById("unlockBtn");
-        unlockBtn.classList.add("active");
+        unlockBtn.classList.add("active", "animate__animated", "animate__heartBeat");
         unlockBtn.style.cursor = "pointer";
         unlockBtn.style.opacity = 1;
         unlockBtn.disabled = false;
