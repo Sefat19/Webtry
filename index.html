@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Unlock Your Link</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -29,14 +26,8 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
 
-    h2 {
-      margin-top: 0;
-      color: #222;
-    }
-
-    p {
-      color: #666;
-    }
+    h2 { margin-top: 0; color: #222; }
+    p { color: #666; }
 
     .action-btn {
       display: flex;
@@ -49,7 +40,6 @@
       font-weight: bold;
       color: white;
       cursor: pointer;
-      position: relative;
       transition: all 0.2s ease-in-out;
     }
 
@@ -64,7 +54,6 @@
 
     .red { background-color: #e53935; }
     .blue { background-color: #3b5998; }
-    .green { background-color: #43a047; }
 
     .progress {
       margin-top: 20px;
@@ -113,15 +102,18 @@
       <img src="https://img.icons8.com/ios-filled/24/ffffff/youtube-play.png"/>
       <span>Subscribe</span>
     </div>
-    <div class="action-btn red" onclick="completeAction(this, 'https://facebook.com')">
+
+    <div class="action-btn red" onclick="completeAction(this, 'https://facebook.com/video_like_link')">
       <img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-like.png"/>
       <span>Like Video</span>
     </div>
-    <div class="action-btn blue" onclick="completeAction(this, 'https://facebook.com/page')">
+
+    <div class="action-btn blue" onclick="completeAction(this, 'https://facebook.com/yourpage')">
       <img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png"/>
       <span>Follow Page</span>
     </div>
-    <div class="action-btn blue" onclick="completeAction(this, 'https://facebook.com/video')">
+
+    <div class="action-btn blue" onclick="completeAction(this, 'https://facebook.com/video_like_link2')">
       <img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-like.png"/>
       <span>Like Video</span>
     </div>
@@ -135,16 +127,15 @@
   <script>
     let completed = 0;
 
-    function completeAction(el, url) {
+    function completeAction(el, link) {
       if (el.classList.contains('done')) return;
 
-      // Open the action link in new tab
-      window.open(url, '_blank');
+      // Open the link in a new tab
+      window.open(link, '_blank');
 
-      // Delay 3 seconds before marking as done
+      // Wait 3 seconds before marking as done
       setTimeout(() => {
         el.classList.add('done', 'animate__animated', 'animate__tada');
-
         completed++;
         document.getElementById("count").innerText = completed;
         document.getElementById("barFill").style.width = (completed * 25) + "%";
@@ -154,13 +145,14 @@
           unlockBtn.classList.add("active", "animate__animated", "animate__heartBeat");
           unlockBtn.style.cursor = "pointer";
           unlockBtn.style.opacity = 1;
+          unlockBtn.disabled = false;
         }
       }, 3000);
     }
 
     function unlock() {
       if (completed < 4) return;
-      window.location.href = "https://yourlink.com"; // Change to your final link
+      window.location.href = "https://yourlink.com"; // 🔁 Change this to your real final URL
     }
   </script>
 </body>
