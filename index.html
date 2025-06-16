@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Unlock Your Link</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -16,6 +19,7 @@
       align-items: center;
       height: 100vh;
     }
+
     .container {
       background: #fff;
       border-radius: 20px;
@@ -24,13 +28,16 @@
       text-align: center;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
+
     h2 {
       margin-top: 0;
       color: #222;
     }
+
     p {
       color: #666;
     }
+
     .action-btn {
       display: flex;
       justify-content: center;
@@ -45,33 +52,40 @@
       position: relative;
       transition: all 0.2s ease-in-out;
     }
+
     .action-btn.done {
       opacity: 0.6;
       pointer-events: none;
     }
+
     .action-btn span {
       margin-left: 10px;
     }
+
     .red { background-color: #e53935; }
     .blue { background-color: #3b5998; }
     .green { background-color: #43a047; }
+
     .progress {
       margin-top: 20px;
       font-weight: bold;
       color: #444;
     }
+
     .bar {
       background: #eee;
       border-radius: 10px;
       overflow: hidden;
       margin: 10px 0;
     }
+
     .bar-fill {
       height: 10px;
       width: 0%;
       background: linear-gradient(90deg, #4caf50, #66bb6a);
       transition: width 0.3s;
     }
+
     .unlock-btn {
       margin-top: 20px;
       padding: 14px;
@@ -83,6 +97,7 @@
       cursor: not-allowed;
       opacity: 0.6;
     }
+
     .unlock-btn.active {
       cursor: pointer;
       opacity: 1;
@@ -94,19 +109,19 @@
     <h2>Unlock Your Link</h2>
     <p>Complete the actions and unlock the link</p>
 
-    <div class="action-btn red" onclick="handleAction(this, 'https://youtube.com/@serena-f1e?si=QwgGBqmbwzAmZYN3')">
+    <div class="action-btn red" onclick="completeAction(this, 'https://youtube.com/@serena-f1e?si=QwgGBqmbwzAmZYN3')">
       <img src="https://img.icons8.com/ios-filled/24/ffffff/youtube-play.png"/>
       <span>Subscribe</span>
     </div>
-    <div class="action-btn red" onclick="handleAction(this, 'https://facebook.com/video1')">
+    <div class="action-btn red" onclick="completeAction(this, 'https://facebook.com')">
       <img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-like.png"/>
       <span>Like Video</span>
     </div>
-    <div class="action-btn blue" onclick="handleAction(this, 'https://facebook.com/yourpage')">
+    <div class="action-btn blue" onclick="completeAction(this, 'https://facebook.com/page')">
       <img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png"/>
       <span>Follow Page</span>
     </div>
-    <div class="action-btn blue" onclick="handleAction(this, 'https://facebook.com/video2')">
+    <div class="action-btn blue" onclick="completeAction(this, 'https://facebook.com/video')">
       <img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-like.png"/>
       <span>Like Video</span>
     </div>
@@ -120,13 +135,16 @@
   <script>
     let completed = 0;
 
-    function handleAction(el, link) {
+    function completeAction(el, url) {
       if (el.classList.contains('done')) return;
 
-      window.open(link, '_blank');
+      // Open the action link in new tab
+      window.open(url, '_blank');
 
+      // Delay 3 seconds before marking as done
       setTimeout(() => {
         el.classList.add('done', 'animate__animated', 'animate__tada');
+
         completed++;
         document.getElementById("count").innerText = completed;
         document.getElementById("barFill").style.width = (completed * 25) + "%";
@@ -137,12 +155,12 @@
           unlockBtn.style.cursor = "pointer";
           unlockBtn.style.opacity = 1;
         }
-      }, 1000); // 1 second delay
+      }, 3000);
     }
 
     function unlock() {
       if (completed < 4) return;
-      window.location.href = "https://yourlink.com"; // Change to your real destination
+      window.location.href = "https://yourlink.com"; // Change to your final link
     }
   </script>
 </body>
