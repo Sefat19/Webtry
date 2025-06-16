@@ -1,52 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Unlock Content</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unlock Your Link</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #3b1fb4, #5a66f1);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 350px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #222;
+    }
+
+    p {
+      color: #666;
+    }
+
+    .action-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px 0;
+      padding: 14px 0;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .action-btn.done {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .action-btn span {
+      margin-left: 10px;
+    }
+
+    .red { background-color: #e53935; }
+    .blue { background-color: #3b5998; }
+    .green { background-color: #43a047; }
+
+    .progress {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .bar {
+      background: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .bar-fill {
+      height: 10px;
+      width: 0%;
+      background: linear-gradient(90deg, #4caf50, #66bb6a);
+      transition: width 0.3s;
+    }
+
+    .unlock-btn {
+      margin-top: 20px;
+      padding: 14px;
+      background-color: #2ecc71;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .unlock-btn.active {
+      cursor: pointer;
+      opacity: 1;
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center min-h-screen">
-  <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md text-center">
-    <h1 class="text-3xl font-bold mb-4 text-gray-800">🔓 Unlock Your Gift</h1>
-    <p class="mb-6 text-gray-600">Subscribe to our YouTube channel to get access.</p>
+<body>
+  <div class="container">
+    <h2>Unlock Your Link</h2>
+    <p>Complete the actions and unlock the link</p>
 
-    <button id="subscribeBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full transition duration-300">
-      🔔 Subscribe Now
-    </button>
-
-    <p id="message" class="text-yellow-600 mt-4 font-medium hidden">⚠️ Please confirm your subscription and click again.</p>
-
-    <div id="unlocked" class="mt-6 hidden">
-      <p class="text-green-600 font-semibold">✅ Subscription confirmed!</p>
-      <a href="https://example.com/your-download-link" target="_blank"
-         class="mt-3 inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition">
-        👉 Click here to Download
-      </a>
+    <div class="action-btn red" onclick="completeAction(this)">
+      <img src="https://img.icons8.com/ios-filled/24/ffffff/youtube-play.png"/>
+      <span>Subscribe</span>
     </div>
+    <div class="action-btn red" onclick="completeAction(this)">
+      <img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-like.png"/>
+      <span>Like</span>
+    </div>
+    <div class="action-btn blue" onclick="completeAction(this)">
+      <img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png"/>
+      <span>Follow #1</span>
+    </div>
+    <div class="action-btn blue" onclick="completeAction(this)">
+      <img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-like.png"/>
+      <span>Like #1</span>
+    </div>
+
+    <div class="progress">Unlock Progress <span id="count">0</span>/4</div>
+    <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+
+    <div class="unlock-btn" id="unlockBtn" onclick="unlock()">Unlock Now →</div>
   </div>
 
   <script>
-    let clickCount = 0;
-    const btn = document.getElementById('subscribeBtn');
-    const message = document.getElementById('message');
-    const unlocked = document.getElementById('unlocked');
+    let completed = 0;
 
-    btn.addEventListener('click', () => {
-      clickCount++;
+    function completeAction(el) {
+      if (el.classList.contains('done')) return;
+      el.classList.add('done');
+      completed++;
+      document.getElementById("count").innerText = completed;
+      document.getElementById("barFill").style.width = (completed * 25) + "%";
 
-      if (clickCount === 1) {
-        message.classList.remove('hidden');
-        btn.classList.add('animate-bounce');
-        btn.innerText = "🔄 Click again to confirm";
-      } else if (clickCount === 2) {
-        message.classList.add('hidden');
-        btn.disabled = true;
-        btn.innerText = "✅ Subscribed";
-        unlocked.classList.remove('hidden');
-        btn.classList.remove('animate-bounce');
+      if (completed === 4) {
+        const unlockBtn = document.getElementById("unlockBtn");
+        unlockBtn.classList.add("active");
+        unlockBtn.style.cursor = "pointer";
+        unlockBtn.style.opacity = 1;
+        unlockBtn.disabled = false;
       }
-    });
+    }
+
+    function unlock() {
+      if (completed < 4) return;
+      window.location.href = "https://yourlink.com"; // Change to your real link
+    }
   </script>
 </body>
 </html>
